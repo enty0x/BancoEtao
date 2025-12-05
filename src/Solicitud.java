@@ -1,15 +1,15 @@
 import java.time.LocalDate;
 
-public class SolicitudCH {
+public class Solicitud {
     private int ID;
     private boolean Estado;
     private LocalDate fecha;
 
-    private ClienteCH cliente;
+    private Cliente cliente;
     private Contrato contrato;
-    private EjecutivoCH ejecutivo;
+    private Ejecutivo ejecutivo;
 
-    public SolicitudCH(ClienteCH cliente, EjecutivoCH ejecutivo) { //version primitiva creada por el cliente
+    public Solicitud(Cliente cliente, Ejecutivo ejecutivo) { //version primitiva creada por el cliente
         this.Estado = false;
         this.fecha = LocalDate.now();
         this.cliente = cliente;
@@ -33,10 +33,10 @@ public class SolicitudCH {
     public LocalDate getFecha() {
         return fecha;
     }
-    public ClienteCH getCliente() {
+    public Cliente getCliente() {
         return cliente;
     }
-    public EjecutivoCH getEjecutivo() {
+    public Ejecutivo getEjecutivo() {
         return ejecutivo;
     }
     public Contrato getContrato() {

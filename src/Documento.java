@@ -1,15 +1,15 @@
 import java.time.LocalDate;
 
-public class DocumentoCH {
+public class Documento {
     private String IdDoc;
     private String TipoDoc;
     private LocalDate FechaVencimiento;
-    public DocumentoCH(String IdDoc, String Tipo) {
+    public Documento(String IdDoc, String Tipo) {
         this.IdDoc = IdDoc;
         this.TipoDoc = Tipo;
         this.FechaVencimiento = null; //No tiene vencimiento, ejemplo: Documentacion de fondos
     }
-    public DocumentoCH(String IdDoc, String Tipo, LocalDate FechaVencimiento) {
+    public Documento(String IdDoc, String Tipo, LocalDate FechaVencimiento) {
         this.IdDoc = IdDoc;
         this.TipoDoc = Tipo;
         this.FechaVencimiento = FechaVencimiento;
