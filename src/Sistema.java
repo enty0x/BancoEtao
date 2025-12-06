@@ -96,6 +96,21 @@ public class Sistema {
         //AHORA EJECUTIVO DEBE FIRMAR SU PARTE DEL CONTRATO
         return true;
     }
+    public boolean ValidarSolicitudCC(Solicitud solicitud) {
+        Cliente clienteSolicitante = solicitud.getCliente();
+        solicitud.setEstado(true); //aprobado
+        System.out.println("Sistema ha aprobado Solicitud, generando cuenta corriente y contrato...");
+
+        CuentaCorriente CC = generarCuentaCorriente(clienteSolicitante);
+        cuentasCorrientes.add(CC);
+        cuentas.add(CC);
+        if(!clientes.contains(clienteSolicitante))clientes.add(clienteSolicitante);
+
+        Contrato contratoNuevo = nuevoContrato(solicitud, "CA");
+        solicitud.setContrato(contratoNuevo);
+        //AHORA EJECUTIVO DEBE FIRMAR SU PARTE DEL CONTRATO
+        return true;
+    }
     private Contrato nuevoContrato(Solicitud solicitud, String tipo) {
 
         Contrato contrato = new Contrato(contratos.size()+1, tipo, solicitud.getCliente(), solicitud.getEjecutivo());
@@ -116,6 +131,19 @@ public class Sistema {
         System.out.println("Puede usarse, cambiar las claves y realizar movimientos despues de firmar el contrato.");
         return CA;
     }
+    //MODIFIQUE AQUI PAULA
+    public CuentaCorriente generarCuentaCorriente(Cliente cliente) {
+        Random random = new Random();
+        String claveCaj = String.valueOf(random.nextInt(10000));
+        while(claveCaj.length() < 4)claveCaj = "0" + claveCaj; //arreglo menor, haciendo la clave de 4 digitos
+
+        CuentaCorriente CC = new CuentaCorriente(sigNumCuentaDisponible(),0,claveCaj,cliente);
+        System.out.println("Se ha creado una cuenta corriente para el cliente " + cliente.getNombre());
+        System.out.println("El numero de cuenta es: " + CC.getNumCuenta());
+        System.out.println("La clave de la cuenta es: " + claveCaj);
+        System.out.println("Puede usarse, cambiar las claves y realizar movimientos despues de firmar el contrato.");
+        return CC;
+    }
 
     public CuentaAhorro buscarCuentaAhorroDelCliente(Cliente cliente) {
         for (CuentaAhorro CA : cuentasAhorro) {
@@ -125,4 +153,12 @@ public class Sistema {
         }
         return null;//nunca deberia llegar aca por las
     }
+    //CUENTA CORRIENTE PAULA
+    public CuentaCorriente buscarCuentaCorrienteDelCliente(Cliente cliente){
+        for(CuentaCorriente CC : cuentasCorrientes){
+            if(CC.getClient().equals(cliente))return CC;
+        }
+        return null;
+    }
+
 }

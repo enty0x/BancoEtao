@@ -7,10 +7,12 @@ public class CuentaCorriente implements Cuenta, Serializable {
     private String estado;
     private Cliente cliente;
 
-    public CuentaCorriente(int numero, int saldo, String Clave) {
+    //MODIFIQUE PARA AGREGAR CLIENTE A CONSTRUCTOR PAULA
+    public CuentaCorriente(int numero, int saldo, String Clave, Cliente cliente) {
         this.numero = numero;
         this.saldo = saldo;
         this.clave = Clave;
+        this.cliente = cliente;
     }
 
     //GET AND SET

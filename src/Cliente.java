@@ -46,6 +46,26 @@ public class Cliente {
             }
         }
     }
+    //CUENTA CORRIENTE Paula
+    public void SolicitarCuentaCorriente(Ejecutivo ejecutivo){
+        Solicitud solicitud = new Solicitud(this, ejecutivo);
+        boolean exito = ejecutivo.nuevaSolicitudCC(solicitud);
+        if(exito){
+            if(solicitud.getEstado()){
+                solicitud.getContrato().FirmaCliente(this);
+                ContratoCCFirmado = true;
+                CUENTACORRIENTE = ejecutivo.buscarCuentaCorriente(this);
+                System.out.println("El cliente "+nombre + " ahora posee una cuenta corriente");
+            }
+        }else{
+            System.out.println("No se pudo abrir cuenta corriente");
+            if(ContratoCRFirmado){
+                System.out.println("Razon: Ya existe una existente.");
+            }else{
+                System.out.println("Razon: No cumple los requisitos.");
+            }
+        }
+    }
 
     public void Depositar(CajaVecina cv, int monto, int ncuenta){
         if(cv.DepositarACuenta(monto, ncuenta)){

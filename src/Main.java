@@ -11,6 +11,10 @@ public class Main{
         CajaVecina cv1 = sistema.crearCajaVecina(100000);
 
         cliente1.Depositar(cv1, 1000, 1);
+        System.out.println("aparte");
+        //para probar
+        cliente1.SolicitarCuentaCorriente(ej1);
+        System.out.println("");
 
     }
 
