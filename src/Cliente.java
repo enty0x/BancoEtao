@@ -29,8 +29,7 @@ public class Cliente {
 
     public void SolicitarCuentaAhorro(Ejecutivo ejecutivo){ //
         Solicitud solicitud = new Solicitud(this, ejecutivo);
-        boolean exito = ejecutivo.nuevaSolicitudCH(solicitud);
-        if(exito){ //Si es True, la cuenta fue creada y hay que marcar el contrato como firmado.
+        if(ejecutivo.nuevaSolicitudCH(solicitud)){ //Si es True, la cuenta fue creada y hay que marcar el contrato como firmado.
             if(solicitud.getEstado()){//true = contrato firmado por ejecutivo, hay cuenta de ahorro yupiii
                 solicitud.getContrato().FirmaCliente(this);
                 ContratoCAFirmado = true;
@@ -53,6 +52,8 @@ public class Cliente {
         }else{
             // llorar()
         }
+    }public void VerMontoCA(CajaVecina cv){
+        cv.VerSaldoDeMiCuentaDeAhorro(this);
     }
 
     //!extras

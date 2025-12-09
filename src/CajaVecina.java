@@ -33,4 +33,13 @@ public class CajaVecina {
             return false;
         }
     }
+    public void VerSaldoDeMiCuentaDeAhorro(Cliente c){
+        CuentaAhorro CA = Sistema.instancia(). buscarCuentaAhorroDelCliente(c);
+        if(CA == null){
+            System.out.println("No existe cuenta de ahorro para este cliente.");
+            return;
+        }else{
+            System.out.printf("El saldo de la cuenta N°" + CA.getNumCuenta() + " es de: " + CA.getSaldo());
+        }
+    }
 }
