@@ -62,20 +62,30 @@ public class Ejecutivo {
         }
         return true;
     }
+
+    //CUENTA CORRIENTE COSAS PAULA
     public boolean nuevaSolicitudCC(Solicitud solicitud) {
         Cliente cliente = solicitud.getCliente();
         //ArrayList<DocumentoCH> docsCliente= cliente.getDocumentos();
         // ! Aunque, por el momento considerare que todo es aprobado, no hara falta usar la funcion
         if(cliente.ContratoCCFirmado){
             return false;
-        }//contrato no firmado, hay disponibilidad de crear cuenta corriente
+        }//contrato no firmado, hay disponibilidad de crear cuenta de ahorro
         Sistema.instancia().integrarSolicitud(solicitud);
         System.out.println("El ejecutivo " + nombre + " creo la nueva solicitud N°" + solicitud.getID());
         System.out.println("validando en sistema...");
-        Sistema.instancia().ValidarSolicitudCA(solicitud);
-        if(solicitud.getEstado()){
+        Sistema.instancia().ValidarSolicitudCC(solicitud);
+        if(!solicitud.getEstado()){//si no salio aprobada
+            System.out.println("Solicitud ID: "+solicitud.getID()+ " ha sido cerrada.");
             return false;
         }
+        solicitud.getContrato().FirmaEjecutivo(this);
+        System.out.println("Solicitud ID: "+solicitud.getID()+ " ha sido cerrada.");
         return true;
+    }
+    public CuentaCorriente buscarCuentaCorriente(Cliente c){
+        if(c.ContratoCCFirmado) return Sistema.instancia().buscarCuentaCorrienteDelCliente(c);
+        System.out.println("El cliente no posee cuenta corriente.");
+        return null;
     }
 }
