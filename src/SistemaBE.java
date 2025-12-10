@@ -1,15 +1,15 @@
+import java.io.Serializable;
 import java.util.ArrayList;
-import java.util.Objects;
 import java.util.Random;
 
-public class Sistema {
-    private static Sistema sistema;
-    private Sistema() {}
-    public static Sistema instancia() {
-        if (sistema == null) {
-            sistema = new Sistema();
+public class SistemaBE implements Serializable {
+    private static SistemaBE sistemaBE;
+    private SistemaBE() {}
+    public static SistemaBE instancia() {
+        if (sistemaBE == null) {
+            sistemaBE = new SistemaBE();
         }
-        return sistema;
+        return sistemaBE;
     }
 
     ArrayList<Solicitud> solicitudes = new ArrayList<Solicitud>();
@@ -119,11 +119,14 @@ public class Sistema {
     }
 
     public CuentaAhorro generarCuentaAhorro(Cliente cliente) {
-        Random random = new Random();
-        String claveCaj = String.valueOf(random.nextInt(10000));
-        while(claveCaj.length() < 4)claveCaj = "0" + claveCaj; //arreglo menor, haciendo la clave de 4 digitos
-
-        CuentaAhorro CA = new CuentaAhorro(cliente,sigNumCuentaDisponible(),String.valueOf(cliente.getCedula()),claveCaj);
+        CuentaAhorro CA = new CuentaAhorro(cliente,sigNumCuentaDisponible());
+        String claveCaj = cliente.ClaveCajero();
+        if(claveCaj == null) {//NO TIENE CLAVES, GENERAR
+            Random random = new Random();
+            claveCaj = String.valueOf(random.nextInt(10000));
+            while(claveCaj.length() < 4)claveCaj = "0" + claveCaj; //arreglo menor, haciendo la clave de 4 digitos
+            cliente.setClaves(claveCaj,String.valueOf(cliente.getCedula()));
+        }
         System.out.println("Se ha creado una cuenta de ahorro para el cliente " + cliente.getNombre());
         System.out.println("El numero de cuenta es: " + CA.getNumCuenta());
         System.out.println("La clave online de la cuenta es: " + cliente.getCedula()+ " (La cedula del cliente).");
@@ -133,11 +136,14 @@ public class Sistema {
     }
     //MODIFIQUE AQUI PAULA
     public CuentaCorriente generarCuentaCorriente(Cliente cliente) {
-        Random random = new Random();
-        String claveCaj = String.valueOf(random.nextInt(10000));
-        while(claveCaj.length() < 4)claveCaj = "0" + claveCaj; //arreglo menor, haciendo la clave de 4 digitos
-
-        CuentaCorriente CC = new CuentaCorriente(sigNumCuentaDisponible(),0,claveCaj,cliente);
+        CuentaCorriente CC = new CuentaCorriente(sigNumCuentaDisponible(),cliente);
+        String claveCaj = cliente.ClaveCajero();
+        if(claveCaj == null) {//NO TIENE CLAVES, GENERAR
+            Random random = new Random();
+            claveCaj = String.valueOf(random.nextInt(10000));
+            while(claveCaj.length() < 4)claveCaj = "0" + claveCaj; //arreglo menor, haciendo la clave de 4 digitos
+            cliente.setClaves(claveCaj,String.valueOf(cliente.getCedula()));
+        }
         System.out.println("Se ha creado una cuenta corriente para el cliente " + cliente.getNombre());
         System.out.println("El numero de cuenta es: " + CC.getNumCuenta());
         System.out.println("La clave de la cuenta es: " + claveCaj);
