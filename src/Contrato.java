@@ -1,4 +1,6 @@
-public class Contrato {
+import java.io.Serializable;
+
+public class Contrato implements Serializable {
     private int IdContrato;
     private String Tipo; //Cuenta Ahorro, Cuenta RUT, Cuenta Corriente
 

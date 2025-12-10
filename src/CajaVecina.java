@@ -1,4 +1,6 @@
-public class CajaVecina {
+import java.io.Serializable;
+
+public class CajaVecina implements Serializable {
     private int IDCV;
     private int dineroDisponible;
 
@@ -24,7 +26,7 @@ public class CajaVecina {
     }
 
     public boolean DepositarACuenta(int dinero, int numeroCuenta) {
-        if (Sistema.instancia().Depositar(numeroCuenta, dinero)) {
+        if (SistemaBE.instancia().Depositar(numeroCuenta, dinero)) {
             System.out.println("Se ha realizado el deposito de " + dinero + " en la cuenta " + numeroCuenta);
             aumentarDinero(dinero); //dinero ingresado a la caja vecina
             return true;
@@ -34,12 +36,21 @@ public class CajaVecina {
         }
     }
     public void VerSaldoDeMiCuentaDeAhorro(Cliente c){
-        CuentaAhorro CA = Sistema.instancia(). buscarCuentaAhorroDelCliente(c);
+        CuentaAhorro CA = SistemaBE.instancia(). buscarCuentaAhorroDelCliente(c);
         if(CA == null){
             System.out.println("No existe cuenta de ahorro para este cliente.");
             return;
         }else{
             System.out.printf("El saldo de la cuenta N°" + CA.getNumCuenta() + " es de: " + CA.getSaldo());
+        }
+    }
+    public void VerSaldoDeMiCuentaCorriente(Cliente c){
+        CuentaCorriente CC = SistemaBE.instancia(). buscarCuentaCorrienteDelCliente(c);
+        if(CC == null){
+            System.out.println("No existe cuenta de ahorro para este cliente.");
+            return;
+        }else{
+            System.out.printf("El saldo de la cuenta N°" + CC.getNumCuenta() + " es de: " + CC.getSaldo());
         }
     }
 }

@@ -3,14 +3,13 @@ import java.io.Serializable;
 public class CuentaCorriente implements Cuenta, Serializable {
     private int numero;
     private int saldo;
-    private String clave;
     private String estado;
     private Cliente cliente;
 
-    public CuentaCorriente(int numero, int saldo, String Clave) {
+    public CuentaCorriente(int numero, Cliente c) {
         this.numero = numero;
-        this.saldo = saldo;
-        this.clave = Clave;
+        this.saldo = 0;
+        this.cliente = c;
     }
 
     //GET AND SET

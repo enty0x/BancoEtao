@@ -1,6 +1,7 @@
+import java.io.Serializable;
 import java.time.LocalDate;
 
-public class Documento {
+public class Documento implements Serializable {
     private String IdDoc;
     private String TipoDoc;
     private LocalDate FechaVencimiento;

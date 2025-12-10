@@ -1,4 +1,6 @@
-public class Ejecutivo {
+import java.io.Serializable;
+
+public class Ejecutivo implements Serializable {
     private String nombre;
     private int IDej;
     private String sucursal;
@@ -26,10 +28,10 @@ public class Ejecutivo {
         if(cliente.ContratoCAFirmado){
             return false;
         }//contrato no firmado, hay disponibilidad de crear cuenta de ahorro
-        Sistema.instancia().integrarSolicitud(solicitud);
+        SistemaBE.instancia().integrarSolicitud(solicitud);
         System.out.println("El ejecutivo " + nombre + " creo la nueva solicitud N°" + solicitud.getID());
         System.out.println("validando en sistema...");
-        Sistema.instancia().ValidarSolicitudCA(solicitud);
+        SistemaBE.instancia().ValidarSolicitudCA(solicitud);
         if(!solicitud.getEstado()){//si no salio aprobada
             System.out.println("Solicitud ID: "+solicitud.getID()+ " ha sido cerrada.");
             return false;
@@ -39,7 +41,7 @@ public class Ejecutivo {
         return true;
     }public CuentaAhorro buscarCuentaAhorro(Cliente c){ //! SI EXISTIESE CLASE PLATAFORMAONLINE QUE FUNCIONE COMO EJECUTIVO,
         //!EJECUTIVO SI O SI TENDRA QUE PASARLE Y ASIGNARLE LA CTA DE AHORRO AL CLIENTE
-        if(c.ContratoCAFirmado) return Sistema.instancia().buscarCuentaAhorroDelCliente(c);
+        if(c.ContratoCAFirmado) return SistemaBE.instancia().buscarCuentaAhorroDelCliente(c);
         //si no entra al if, no cumple por lo que...
         System.out.println("El cliente no posee cuenta de ahorro.");
         return null;
@@ -53,10 +55,10 @@ public class Ejecutivo {
         if(cliente.ContratoCRFirmado){
             return false;
         }//contrato no firmado, hay disponibilidad de crear cuenta rut
-        Sistema.instancia().integrarSolicitud(solicitud);
+        SistemaBE.instancia().integrarSolicitud(solicitud);
         System.out.println("El ejecutivo " + nombre + " creo la nueva solicitud N°" + solicitud.getID());
         System.out.println("validando en sistema...");
-        Sistema.instancia().ValidarSolicitudCA(solicitud);
+        SistemaBE.instancia().ValidarSolicitudCA(solicitud);
         if(solicitud.getEstado()){
             return false;
         }
@@ -69,10 +71,10 @@ public class Ejecutivo {
         if(cliente.ContratoCCFirmado){
             return false;
         }//contrato no firmado, hay disponibilidad de crear cuenta corriente
-        Sistema.instancia().integrarSolicitud(solicitud);
+        SistemaBE.instancia().integrarSolicitud(solicitud);
         System.out.println("El ejecutivo " + nombre + " creo la nueva solicitud N°" + solicitud.getID());
         System.out.println("validando en sistema...");
-        Sistema.instancia().ValidarSolicitudCA(solicitud);
+        SistemaBE.instancia().ValidarSolicitudCA(solicitud);
         if(solicitud.getEstado()){
             return false;
         }

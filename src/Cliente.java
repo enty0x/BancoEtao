@@ -1,5 +1,6 @@
+import java.io.Serializable;
 import java.util.ArrayList;
-public class Cliente {
+public class Cliente implements Serializable {
     private String nombre;
     private int Cedula; //Rut o DNI (Sin puntos ni guion)
     //! -K ES -0
@@ -7,6 +8,9 @@ public class Cliente {
     private ArrayList<Documento> documentos;
 
     //Atributos sobre Cuentas
+    //!ESTAS CLAVES SERAN PARA LOS TIPOS 3 DE CUENTA
+    private String ClaveOnline;
+    private String ClaveCajero; // SOLO 4 DIGITOS, COMO STRING, PORQ EN INT EL 0 PRINCIPAL DE UN "0581" SALE COMO "581"
     //cuenta ahorro
     public boolean ContratoCAFirmado;
     private CuentaAhorro CUENTAAHORRO;
@@ -23,8 +27,25 @@ public class Cliente {
         this.edad = edad;
         documentos = new ArrayList<Documento>();
 
+        ClaveCajero = null;
+        ClaveOnline = null;
+
         ContratoCAFirmado = false;
         CUENTAAHORRO = null;
+        ContratoCRFirmado = false;
+        CUENTARUT = null;
+        ContratoCCFirmado = false;
+        CUENTACORRIENTE = null;
+    }
+    //!PARA LAS CLAVES:
+    public void setClaves(String claveCajero, String claveOnline){
+        ClaveCajero = claveCajero;
+        ClaveOnline = claveOnline;
+    }
+    public String ClaveOnline(){
+        return ClaveOnline;
+    }public String ClaveCajero(){
+        return ClaveCajero;
     }
 
     public void SolicitarCuentaAhorro(Ejecutivo ejecutivo){ //
@@ -69,5 +90,8 @@ public class Cliente {
     }
     public boolean equals(Cliente cliente){
         return (this.Cedula == cliente.Cedula);
+    }
+    public int getEdad() {
+        return  this.edad;
     }
 }

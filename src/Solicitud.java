@@ -1,6 +1,7 @@
+import java.io.Serializable;
 import java.time.LocalDate;
 
-public class Solicitud {
+public class Solicitud implements Serializable {
     private int ID;
     private boolean Estado;
     private LocalDate fecha;
@@ -8,14 +9,12 @@ public class Solicitud {
     private Cliente cliente;
     private Contrato contrato;
     private Ejecutivo ejecutivo;
-
     public Solicitud(Cliente cliente, Ejecutivo ejecutivo) { //version primitiva creada por el cliente
         this.Estado = false;
         this.fecha = LocalDate.now();
         this.cliente = cliente;
         this.ejecutivo = ejecutivo;
-    }
-    //|---------ESTO LO MANEJA SISTEMA---------|
+    }//|---------ESTO LO MANEJA SISTEMA---------|
     public void setID(int ID) { //metodo para asignar un ID, asignado por sistema.
         this.ID = ID;
     }
