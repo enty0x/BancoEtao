@@ -1,5 +1,6 @@
 import java.io.Serializable;
 import java.util.ArrayList;
+
 public class Cliente implements Serializable {
     private String nombre;
     private int Cedula; //Rut o DNI (Sin puntos ni guion)
@@ -37,81 +38,129 @@ public class Cliente implements Serializable {
         ContratoCCFirmado = false;
         CUENTACORRIENTE = null;
     }
+
     //!PARA LAS CLAVES:
-    public void setClaves(String claveCajero, String claveOnline){
+    public void setClaves(String claveCajero, String claveOnline) {
         ClaveCajero = claveCajero;
         ClaveOnline = claveOnline;
     }
-    public String ClaveOnline(){
+    public String ClaveOnline() {
         return ClaveOnline;
-    }public String ClaveCajero(){
+    }
+    public String ClaveCajero() {
         return ClaveCajero;
     }
 
-    public void SolicitarCuentaAhorro(Ejecutivo ejecutivo){ //
+    public void SolicitarCuentaAhorro(Ejecutivo ejecutivo) { //
         Solicitud solicitud = new Solicitud(this, ejecutivo);
-        if(ejecutivo.nuevaSolicitudCA(solicitud)){ //Si es True, la cuenta fue creada y hay que marcar el contrato como firmado.
-            if(solicitud.getEstado()){//true = contrato firmado por ejecutivo, hay cuenta de ahorro yupiii
+
+        if (ejecutivo.nuevaSolicitudCA(solicitud)) { //Si es True, la cuenta fue creada y hay que marcar el contrato como firmado.
+            if (solicitud.getEstado()) {//true = contrato firmado por ejecutivo, hay cuenta de ahorro yupiii
                 solicitud.getContrato().FirmaCliente(this);
                 ContratoCAFirmado = true;
                 CUENTAAHORRO = ejecutivo.buscarCuentaAhorro(this);
                 System.out.println("El cliente " + nombre + " ahora posee una cuenta de ahorro.");
             }//!aun no existe la posiblidad de no tener documentos validos, por lo que else no existe.
-        }else{ //
+        } else { //
             System.out.println("No se pudo abrir cuenta de ahorro");
-            if(ContratoCAFirmado){
+            if (ContratoCAFirmado) {
                 System.out.println("Razon: Ya existe una existente.");
-            }else{
+            } else {
+                System.out.println("Razon: No cumple los requisitos.");
+            }
+        }
+    }
+    public void SolicitarCuentaRut(Ejecutivo ejecutivo) {
+        Solicitud solicitud = new Solicitud(this, ejecutivo);
+
+        if (ejecutivo.nuevaSolicitudCR(solicitud)) {
+            if (solicitud.getEstado()) {
+                solicitud.getContrato().FirmaCliente(this);
+                ContratoCRFirmado = true;
+                CUENTARUT = ejecutivo.buscarCuentaRut(this);
+                System.out.println("El cliente " + nombre + " ahora posee una cuenta RUT.");
+            }
+        } else {
+            System.out.println("No se pudo abrir cuenta rut");
+            if (ContratoCRFirmado) {
+                System.out.println("Razon: Ya existe una existente.");
+            } else {
                 System.out.println("Razon: No cumple los requisitos.");
             }
         }
     }
     //CUENTA CORRIENTE Paula
-    public void SolicitarCuentaCorriente(Ejecutivo ejecutivo){
+    public void SolicitarCuentaCorriente(Ejecutivo ejecutivo) {
         Solicitud solicitud = new Solicitud(this, ejecutivo);
-        boolean exito = ejecutivo.nuevaSolicitudCC(solicitud);
-        if(exito){
-            if(solicitud.getEstado()){
+
+        if (ejecutivo.nuevaSolicitudCC(solicitud)) {
+            if (solicitud.getEstado()) {
                 solicitud.getContrato().FirmaCliente(this);
                 ContratoCCFirmado = true;
                 CUENTACORRIENTE = ejecutivo.buscarCuentaCorriente(this);
-                System.out.println("El cliente "+nombre + " ahora posee una cuenta corriente");
+                System.out.println("El cliente " + nombre + " ahora posee una cuenta corriente");
             }
-        }else{
+        } else {
             System.out.println("No se pudo abrir cuenta corriente");
-            if(ContratoCRFirmado){
+            if (ContratoCRFirmado) {
                 System.out.println("Razon: Ya existe una existente.");
-            }else{
+            } else {
                 System.out.println("Razon: No cumple los requisitos.");
             }
         }
     }
 
-    public void Depositar(CajaVecina cv, int monto, int ncuenta){
-        if(cv.DepositarACuenta(monto, ncuenta)){
+    public void Depositar(CajaVecina cv, int monto, int ncuenta) {
+        if (cv.DepositarACuenta(monto, ncuenta)) {
             // saltardefelicidad()
-        }else{
+        } else {
             // llorar()
         }
-    }public void VerMontoCA(CajaVecina cv){
+    }
+    public void Depositar(Ejecutivo ej, int monto, int ncuenta) {
+        if (ej.DepositarACuenta(monto, ncuenta)) {
+            // saltardefelicidad()
+        } else {
+            // llorar()
+        }
+    }
+    //! FORMAS DE VER SALDOS DE LAS CUENTAS: CAJA VECINA O EJECUTIVO
+    public void VerSaldoCA(CajaVecina cv) {
         cv.VerSaldoDeMiCuentaDeAhorro(this);
     }
-
+    public void VerSaldoCA(Ejecutivo ej) {
+        ej.VerSaldoDeMiCuentaDeAhorro(this);
+    }
+    public void VerSaldoCR(CajaVecina cv) {
+        cv.VerSaldoDeMiCuentaRUT(this);
+    }
+    public void VerSaldoCR(Ejecutivo ej) {
+        ej.VerSaldoDeMiCuentaRUT(this);
+    }
+    public void VerSaldoCC(CajaVecina cv) {
+        cv.VerSaldoDeMiCuentaCorriente(this);
+    }
+    public void VerSaldoCC(Ejecutivo ej) {
+        ej.VerSaldoDeMiCuentaCorriente(this);
+    }
     //!extras
     public String getNombre() {
         return nombre;
     }
-    public int getCedula() {return Cedula;}
-    public void agregarDoc(Documento doc){
+
+    public int getCedula() {
+        return Cedula;
+    }
+    public void agregarDoc(Documento doc) {
         documentos.add(doc);
     }
-    public ArrayList<Documento> getDocumentos(){
+    public ArrayList<Documento> getDocumentos() {
         return documentos;
     }
-    public boolean equals(Cliente cliente){
+    public boolean equals(Cliente cliente) {
         return (this.Cedula == cliente.Cedula);
     }
     public int getEdad() {
-        return  this.edad;
+        return this.edad;
     }
 }

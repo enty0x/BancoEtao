@@ -2,22 +2,16 @@ import java.io.Serializable;
 
 public class CuentaRut implements Cuenta,Serializable {
     private int NumeroCuenta;
-    private int Saldo;
-    private String estado;
+    private int saldo;
     private Cliente client;
 
-    public CuentaRut(int NumeroCuenta, String estado, Cliente c) {
+    public CuentaRut(int NumeroCuenta, Cliente c) {
         this.NumeroCuenta = NumeroCuenta;
-        this.Saldo = 0;
-        this.estado = estado;
+        this.saldo = 0;
         this.client = c;
     }
-
-    //GET AND SET
-    public String getEstado() {return estado;}
-    public void setEstado(String estado) {this.estado = estado;}
-    public int getSaldo() {return Saldo;}
-
+    @Override
+    public int getSaldo() {return saldo;}
     @Override
     public int getNumCuenta() {
         return NumeroCuenta;
@@ -27,7 +21,12 @@ public class CuentaRut implements Cuenta,Serializable {
         return null;
     }
     @Override
-    public void recibeDinero(int cantidad) {
-        Saldo += cantidad;
+    public boolean recibeDinero(int cantidad) {saldo += cantidad; return true;}
+    @Override
+    public boolean retiraDinero(int monto) {
+        if(monto > saldo) {
+            return false;
+        }saldo -= monto;
+        return true;
     }
 }

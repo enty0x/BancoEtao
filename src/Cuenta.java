@@ -2,5 +2,6 @@ public interface Cuenta {
     public int getSaldo();
     public int getNumCuenta();
     public Cliente getClient();
-    public void recibeDinero(int cantidad);
+    public boolean recibeDinero(int cantidad);
+    public boolean retiraDinero(int cantidad);
 }

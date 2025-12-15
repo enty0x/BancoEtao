@@ -11,13 +11,13 @@ public class CuentaAhorro implements Cuenta, Serializable {
         this.client = cliente;
     }
     //modificadores de acceso
-    public void recibeDinero(int monto) {
-        saldo += monto;
-    }public void retiraDinero(int monto) {
+    public boolean recibeDinero(int monto) {
+        saldo += monto;return true;
+    }public boolean retiraDinero(int monto) {
         if(monto > saldo) {
-            System.out.println("No hay suficiente saldo");
-            return;
+            return false;
         }saldo -= monto;
+        return true;
     }
 
     //gets posibles
