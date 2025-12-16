@@ -59,6 +59,7 @@ public class CajaVecina implements Serializable {
         }
         if(!SistemaBE.instancia().Transferir(cuentaOrig, cuentaDest, monto)) {
             System.out.println("La cuenta originaria no tiene saldo suficiente.");
+            return false;
         }
         System.out.println("Estimado " + clientOrig.getNombre() + " se ha realizado la transferencia de " + monto + " de la cuenta " + nCuentaOriginaria + " a la cuenta " + nCuentaDestinaria);
         return true;
@@ -69,7 +70,7 @@ public class CajaVecina implements Serializable {
             System.out.println("No existe cuenta de ahorro para este cliente.");
             return;
         }else{
-            System.out.printf("El saldo de la cuenta N°" + CA.getNumCuenta() + " es de: " + CA.getSaldo());
+            System.out.println("El saldo de la cuenta N°" + CA.getNumCuenta() + " es de: " + CA.getSaldo());
         }
     }
     public void VerSaldoDeMiCuentaCorriente(Cliente c){
@@ -78,10 +79,16 @@ public class CajaVecina implements Serializable {
             System.out.println("No existe cuenta de ahorro para este cliente.");
             return;
         }else{
-            System.out.printf("El saldo de la cuenta N°" + CC.getNumCuenta() + " es de: " + CC.getSaldo());
+            System.out.println("El saldo de la cuenta N°" + CC.getNumCuenta() + " es de: " + CC.getSaldo());
         }
     }
     public void VerSaldoDeMiCuentaRUT(Cliente c){
         CuentaRut CR = SistemaBE.instancia().buscarCuentaRutDelCliente(c);
+        if(CR == null){
+            System.out.println("No existe cuenta de rut para este cliente.");
+            return;
+        }else{
+            System.out.println("El saldo de la cuenta N°" + CR.getNumCuenta() + " es de: " + CR.getSaldo());
+        }
     }
 }

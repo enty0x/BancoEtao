@@ -9,15 +9,12 @@ public class Main{
     public static void mainprueba() {
         SistemaBE sistemaBE = SistemaBE.instancia();
         Scanner sc = new Scanner(System.in);
-
-        Cliente cliente1 = new Cliente("pepe", 218238190, 20);
-        Ejecutivo ej1 = sistemaBE.crearEjecutivo("Jose", "Chillan");
-        cliente1.SolicitarCuentaAhorro(ej1);
-        System.out.println("");
         CajaVecina cv1 = sistemaBE.crearCajaVecina(100000);
-        System.out.println("---!PROBANDO DEPOSITOS!---");
-        cliente1.Depositar(cv1, 1000, 1);
-        cliente1.Depositar(ej1, 1000, 1);
+        Cliente cliente1 = new Cliente("pepe", 218238190, 18);
+        Ejecutivo ej1 = sistemaBE.crearEjecutivo("Jose", "Chillan");
+
+        System.out.println("---!solicita cuenta ahorro!---");
+        cliente1.SolicitarCuentaAhorro(ej1);
         System.out.println("");
         //para probar
         System.out.println("---!solicita cuenta rut!---");
@@ -25,7 +22,12 @@ public class Main{
         System.out.println("");
         System.out.println("---!solicita cuenta corriente!---");
         cliente1.SolicitarCuentaCorriente(ej1);
+        System.out.println("");
         Scanner sc1 = new Scanner(System.in);
+        System.out.println("---!PROBANDO DEPOSITOS!---");
+        cliente1.Depositar(ej1, 1000000, 1);
+        cliente1.Depositar(cv1, 50000, 2);
+        cliente1.Depositar(cv1, 90000, 3);
         System.out.println("");
         System.out.println("PROBANDO TRANSFERENCIAS");
         System.out.println("");
@@ -38,6 +40,10 @@ public class Main{
         System.out.print("Ingrese su clave de cajero: ");
         String clave = sc1.next();
         cliente1.Transferir(cv1, monto, CuentaOrig, CuentaDest, clave);
+        System.out.println("");
+        cv1.VerSaldoDeMiCuentaDeAhorro(cliente1);
+        cv1.VerSaldoDeMiCuentaRUT(cliente1);
+        cv1.VerSaldoDeMiCuentaCorriente(cliente1);
     }
 
 }
