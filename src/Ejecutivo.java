@@ -37,6 +37,33 @@ public class Ejecutivo implements Serializable {
         }
     }
 
+    public boolean TransferirDinero(Cliente cliente, int nCuentaOriginaria, int nCuentaDestinaria, int monto, String clave) { //El cliente ingresa al sistema
+        //! usa el sistema para poder buscar las cuentas de origen y destino
+        Cuenta cuentaOrig = SistemaBE.instancia().buscarCuenta(nCuentaOriginaria);
+        if(cuentaOrig == null) {//no la encontro
+            System.out.println("La cuenta originaria no existe.");
+            return false;
+        }
+        Cliente clientOrig = cuentaOrig.getClient();
+        if(!clientOrig.equals(cliente)){
+            System.out.println("No puedes acceder a la cuenta de otro cliente.");
+            return false;
+        }
+        Cuenta cuentaDest = SistemaBE.instancia().buscarCuenta(nCuentaDestinaria);
+        if(cuentaDest == null) {//no la encontro
+            System.out.println("La cuenta destinaria no existe.");
+            return false;
+        }
+        if(!clientOrig.ClaveCajero().equals(clave)){
+            System.out.println("La clave ingresada no es correcta.");
+            return false;
+        }
+        if(!SistemaBE.instancia().Transferir(cuentaOrig, cuentaDest, monto)) {
+            System.out.println("La cuenta originaria no tiene saldo suficiente.");
+        }
+        System.out.println("Estimado " + clientOrig.getNombre() + " se ha realizado la transferencia de " + monto + " de la cuenta " + nCuentaOriginaria + " a la cuenta " + nCuentaDestinaria);
+        return true;
+    }
     public boolean nuevaSolicitudCA(Solicitud solicitud) {
         Cliente cliente = solicitud.getCliente();
         //ArrayList<DocumentoCH> docsCliente= cliente.getDocumentos();
@@ -76,14 +103,20 @@ public class Ejecutivo implements Serializable {
         // ! Aunque, por el momento considerare que todo es aprobado, no hara falta usar la funcion
         if (cliente.ContratoCRFirmado) {
             return false;
-        }//contrato no firmado, hay disponibilidad de crear cuenta rut
+        }if (cliente.getEdad() < 18) {
+            return false;
+        }
+        //contrato no firmado, hay disponibilidad de crear cuenta rut
         SistemaBE.instancia().integrarSolicitud(solicitud);
         System.out.println("El ejecutivo " + nombre + " creo la nueva solicitud N°" + solicitud.getID());
         System.out.println("validando en sistema...");
         SistemaBE.instancia().ValidarSolicitudCR(solicitud);
-        if (solicitud.getEstado()) {
+        if (!solicitud.getEstado()) {
+            System.out.println("Solicitud ID: " + solicitud.getID() + " ha sido cerrada.");
             return false;
         }
+        solicitud.getContrato().FirmaEjecutivo(this);
+        System.out.println("Solicitud ID: " + solicitud.getID() + " ha sido cerrada.");
         return true;
     }
 

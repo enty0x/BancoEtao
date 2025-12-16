@@ -124,6 +124,13 @@ public class Cliente implements Serializable {
             // llorar()
         }
     }
+
+    public void Transferir(CajaVecina cv, int monto, int ncuentaOrigen, int ncuentaDestino, String clave) {
+        cv.TransferirDinero(this, ncuentaOrigen, ncuentaDestino, monto, clave);
+    }
+    public void Transferir(Ejecutivo ej, int monto, int ncuentaOrigen, int ncuentaDestino, String clave) {
+        ej.TransferirDinero(this, ncuentaOrigen, ncuentaDestino, monto, clave);
+    }
     //! FORMAS DE VER SALDOS DE LAS CUENTAS: CAJA VECINA O EJECUTIVO
     public void VerSaldoCA(CajaVecina cv) {
         cv.VerSaldoDeMiCuentaDeAhorro(this);

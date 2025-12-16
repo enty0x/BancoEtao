@@ -18,7 +18,7 @@ public class CuentaRut implements Cuenta,Serializable {
     }
     @Override
     public Cliente getClient() {
-        return null;
+        return client;
     }
     @Override
     public boolean recibeDinero(int cantidad) {saldo += cantidad; return true;}
