@@ -1,6 +1,9 @@
 import java.util.*;
 public class Main{
     public static void main(String[] args) {
+        SistemaBE sistemaBE = SistemaBE.instancia();
+        Scanner sc = new Scanner(System.in);
+
         mainprueba();
     }
     public static void mainprueba() {
