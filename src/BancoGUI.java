@@ -216,9 +216,9 @@ public class BancoGUI extends JFrame {
         try {
             int rut = Integer.parseInt(rutStr);
             int edad = Integer.parseInt(edadStr);
-            
-            if (edad < 18) {
-                JOptionPane.showMessageDialog(this, "Error: El cliente debe ser mayor de 18 años.", "Edad Inválida", JOptionPane.ERROR_MESSAGE);
+
+            if (edad < 0) {
+                JOptionPane.showMessageDialog(this, "Error: El cliente debe tener una edad valida desde 0.", "Edad Inválida", JOptionPane.ERROR_MESSAGE);
                 return;
             }
 
@@ -384,8 +384,8 @@ public class BancoGUI extends JFrame {
             cargarDatosTabla();
             actualizarCombosGlobales(); 
         } else {
-            if (cliente.getEdad() < 18) {
-                JOptionPane.showMessageDialog(this, "Denegada: El cliente es MENOR DE EDAD.", "Error", JOptionPane.ERROR_MESSAGE);
+            if (cliente.getEdad() < 14) {
+                JOptionPane.showMessageDialog(this, "Denegada: El cliente DEBE TENER 14 O MAS.", "Error", JOptionPane.ERROR_MESSAGE);
             } else {
                 JOptionPane.showMessageDialog(this, "La solicitud fue rechazada por el sistema.", "Error", JOptionPane.ERROR_MESSAGE);
             }

@@ -71,7 +71,7 @@ public class Ejecutivo implements Serializable {
         if (cliente.ContratoCAFirmado) {
             return false;
         }
-        if (cliente.getEdad() < 18) {
+        if (cliente.getEdad() < 14) {
             return false;
         }
         //contrato no firmado, hay disponibilidad de crear cuenta de ahorro
@@ -103,7 +103,7 @@ public class Ejecutivo implements Serializable {
         // ! Aunque, por el momento considerare que todo es aprobado, no hara falta usar la funcion
         if (cliente.ContratoCRFirmado) {
             return false;
-        }if (cliente.getEdad() < 18) {
+        }if (cliente.getEdad() < 14) {
             return false;
         }
         //contrato no firmado, hay disponibilidad de crear cuenta rut
@@ -128,7 +128,7 @@ public class Ejecutivo implements Serializable {
         if (cliente.ContratoCCFirmado) {
             return false;
         }
-        if (cliente.getEdad() < 18) {
+        if (cliente.getEdad() < 14) {
             return false;
         }//contrato no firmado, hay disponibilidad de crear cuenta corriente
         SistemaBE.instancia().integrarSolicitud(solicitud);

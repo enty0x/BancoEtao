@@ -1,10 +1,10 @@
+import javax.swing.*;
 import java.util.*;
 public class Main{
     public static void main(String[] args) {
-        SistemaBE sistemaBE = SistemaBE.instancia();
-        Scanner sc = new Scanner(System.in);
-
-        mainprueba();
+        BancoGUI bancoGUI = new BancoGUI();
+        SwingUtilities.invokeLater(() -> bancoGUI.setVisible(true));
+        //mainprueba();
     }
     public static void mainprueba() {
         SistemaBE sistemaBE = SistemaBE.instancia();
